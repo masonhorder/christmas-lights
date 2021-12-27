@@ -3,33 +3,53 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Create Song</title>
+  <title>{{edit}} Song</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+
 </head>
-<style>
-</style>
+<body style="background-color: rgb(24, 134, 24);">
+  <div class="body">
 
-<body>
-  <h1>Edit Song</h1>
-  <form action="/addSongData">
-    File Name:
-    <input name="file" type="text" placeholder="File Name" value="{{fileName}}" >
-    <br>
-    Red Value:
-    <input name="r" type="number" placeholder="Red Value" min="0" max="255">
-    <br>
-    Green Value:
-    <input name="g" type="number" placeholder="Green Value"min="0" max="255">
-    <br>
-    Blue Value:
-    <input name="b" type="number" placeholder="Blue Value"min="0" max="255">
-    <br>
-    Delay(in ms) after previous command:
-    <input name="delay" type="number" placeholder="Delay(in ms) after previous command" min="0">
-    <br>
-    <input type="submit" value="Add">
-  </form>
-  
+    {% if edit == "Edit" %}
+      {% set displayFile = "none" %}
+      {% set title = "Editing " + fileName %}
+    {% else %}
+      {% set displayFile = "show" %}
+      {% set title = "Add Song " %}
+    {% endif %}
+
+
+
+    <h1>{{title}}</h1>
+    <form action="/addSongData">
+
+
+      {% if edit == "Edit" %}
+        {% set displayFile = "none" %}
+      {% else %}
+        {% set displayFile = "show" %}
+      {% endif %}
+      <span style="display: {{displayFile}}" >
+        File Name:
+        <input name="file" type="text" placeholder="File Name" value="{{fileName}}" >
+        <br>
+      </span>
+      
+      Red Value:
+      <input name="r" type="number" placeholder="Red Value" min="0" max="255">
+      <br>
+      Green Value:
+      <input name="g" type="number" placeholder="Green Value"min="0" max="255">
+      <br>
+      Blue Value:
+      <input name="b" type="number" placeholder="Blue Value"min="0" max="255">
+      <br>
+      Delay(in ms) after previous command:
+      <input name="delay" type="number" placeholder="Delay(in ms) after previous command" min="0">
+      <br>
+      <input type="submit" value="Add">
+    </form>
+  </div>
 </body>
-
 </html>

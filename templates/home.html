@@ -5,18 +5,26 @@
   <meta charset="UTF-8">
   <title>Christmas Light Show Dashboard</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
-<style>
-</style>
+<body style="background-color: rgb(24, 134, 24);">
+  <div class="body">
+    <h1>Christmas Light Show Dashboard</h1>
+    <a class="button" href="/createSong">Add Show</a>
+    <br>
+    <br>
+    <br>
+    <h2>Available Shows:</h2>
+    {% for song in songs %}
 
-<body>
-  <h1>Christmas Light Show Dashboard</h1>
-  <a href="/createSong">Edit Songs</a>
-  <br>
-  {% for song in songs %}
-  {{song}}
-  <br>
-  {% endfor %}
+      <div class="row">
+        <a class="smallButton" href="/playSong?fileLocation={{song}}">&#9658 play</a>
+        <a class="smallButtonBlue" href="/createSong?file={{song}}&edit=t">edit</a>
+        {{song}}
+        <br>
+      </div>
+      
+    {% endfor %}
+  </div>
 </body>
-
 </html>
