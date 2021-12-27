@@ -13,19 +13,19 @@
   <h1>Edit Song</h1>
   <form action="/addSongData">
     File Name:
-    <input type="text" placeholder="File Name">
+    <input name="file" type="text" placeholder="File Name" value="{{fileName}}" >
     <br>
     Red Value:
-    <input type="number" placeholder="Red Value" min="0" max="255">
+    <input name="r" type="number" placeholder="Red Value" min="0" max="255">
     <br>
     Green Value:
-    <input type="number" placeholder="Green Value"min="0" max="255">
+    <input name="g" type="number" placeholder="Green Value"min="0" max="255">
     <br>
     Blue Value:
-    <input type="number" placeholder="Blue Value"min="0" max="255">
+    <input name="b" type="number" placeholder="Blue Value"min="0" max="255">
     <br>
     Delay(in ms) after previous command:
-    <input type="number" placeholder="Delay(in ms) after previous command" min="0">
+    <input name="delay" type="number" placeholder="Delay(in ms) after previous command" min="0">
     <br>
     <input type="submit" value="Add">
   </form>
