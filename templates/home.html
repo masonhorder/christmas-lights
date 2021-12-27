@@ -11,7 +11,12 @@
 
 <body>
   <h1>Christmas Light Show Dashboard</h1>
-
+  <a href="/createSong">Edit Songs</a>
+  <br>
+  {% for song in songs %}
+  {{song}}
+  <br>
+  {% endfor %}
 </body>
 
 </html>

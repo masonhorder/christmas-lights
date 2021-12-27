@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Create Song</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<style>
+</style>
+
+<body>
+  <h1>Edit Song</h1>
+  <form action="/addSongData">
+    File Name:
+    <input type="text" placeholder="File Name">
+    <br>
+    Red Value:
+    <input type="number" placeholder="Red Value" min="0" max="255">
+    <br>
+    Green Value:
+    <input type="number" placeholder="Green Value"min="0" max="255">
+    <br>
+    Blue Value:
+    <input type="number" placeholder="Blue Value"min="0" max="255">
+    <br>
+    Delay(in ms) after previous command:
+    <input type="number" placeholder="Delay(in ms) after previous command" min="0">
+    <br>
+    <input type="submit" value="Add">
+  </form>
+  
+</body>
+
+</html>
