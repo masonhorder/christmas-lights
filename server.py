@@ -23,6 +23,32 @@ def addSongData():
     songWriter.writerow(data)
   return redirect(f"/createSong?file={fileName}&edit=t")
 
+@app.route('/editLine', methods=["GET"])
+def editLine():
+  lineNumber = int(request.args.get('line'))
+  lines = []
+  fileName = request.args.get('fileName')
+  with open(f'{songDirectory}/{fileName}.csv', 'r') as rawScript: 
+    script = csv.reader(rawScript)
+    i = 0
+    for line in script:
+      if i == lineNumber:
+        print("line acquired")
+        if request.args.get('d') != "t":
+          color = tuple(int(request.args.get('color').lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+          lines.append([color[0],color[1],color[2],int(request.args.get('delay'))])
+          i+=1
+        else:
+          print('delete')
+      else:
+        lines.append(line)
+      i+=1
+  with open(f'{songDirectory}/{fileName}.csv', 'w') as scriptFile: 
+    writer = csv.writer(scriptFile)
+    writer.writerows(lines)
+
+  return redirect(f"/createSong?file={fileName}&edit=t")
+
 
 
 @app.route('/createSong', methods=["GET"])

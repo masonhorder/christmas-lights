@@ -53,9 +53,14 @@
     {% for line in lines %}
 
       <div class="row">
-        <input type="color" name="color" value="{{line[5]}}" required>
-        Delay: <input type="number" name="delay" value="{{line[3]}}" min="0" required>
-        <br>
+        <form action="/editLine">
+          <input type="hidden" name="line" value="{{line[4]}}">
+          <input type="hidden" name="fileName" value="{{fileName}}">
+          <input type="color" name="color" value="{{line[5]}}" onblur="this.form.submit()" required>
+          Delay: <input type="number" name="delay" value="{{line[3]}}" min="0" onblur="this.form.submit()" required>
+          <a href="/editLine?d=t&line={{line[4]}}&fileName={{fileName}}">delete</a>
+          <br>
+        </form>
       </div>
       
     {% endfor %}
