@@ -15,11 +15,13 @@ def setColor(r,g,b):
 @app.route('/addSongData', methods=["GET"])
 def addSongData():
   fileName= request.args.get('file')
-  data = [request.args.get('r'),request.args.get('g'),request.args.get('b'),request.args.get('delay')]
+  print(request.args.get('color'))
+  color = tuple(int(request.args.get('color').lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+  data = [color[0],color[1],color[2],request.args.get('delay')]
   with open(f'{songDirectory}/{fileName}.csv','a') as song:
     songWriter = csv.writer(song)
     songWriter.writerow(data)
-  return redirect(f"/createSong?file={fileName}")
+  return redirect(f"/createSong?file={fileName}&edit=t")
 
 
 
@@ -27,15 +29,24 @@ def addSongData():
 def createSong():
   fileName = request.args.get('file')
   edit = "Add"
+  lines = []
   if fileName == None:
     fileName = "newFile"
   if request.args.get('edit') == None:
     edit="Add"
   elif request.args.get('edit') == "t":
     edit = "Edit"
+    with open(f'{songDirectory}/{fileName}.csv', 'r') as rawScript: 
+      script = csv.reader(rawScript)
+      i = 0
+      for line in script:
+        line.append(i)
+        line.append('#%02x%02x%02x' % (int(line[0]),int(line[1]),int(line[2])))
+        lines.append(line)
+        i+=1
     
   
-  return render_template('create.html', fileName=fileName, edit=edit)
+  return render_template('create.html', fileName=fileName, edit=edit, lines=lines)
 
 
 @app.route('/playSong', methods=["GET"])
@@ -44,7 +55,7 @@ def playSong():
   print("starting show: " + fileLocation)
 
 
-  showScriptRaw = open(f"{songDirectory}/{fileLocation}")
+  showScriptRaw = open(f"{songDirectory}/{fileLocation}.csv")
   showScript = csv.reader(showScriptRaw)
   setColor(0,0,0)
   time.sleep(4)
@@ -70,7 +81,9 @@ def home():
   print("finding songs")
   for file in os.listdir(songDirectory):
     if file.endswith(".csv"):
-      songs.append(file)
+      fileString = file.split(".", 1)
+      fileString = fileString[0]
+      songs.append(fileString)
   return render_template('home.html', songs=songs)
 
 

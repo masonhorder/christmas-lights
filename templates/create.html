@@ -13,15 +13,16 @@
 
     {% if edit == "Edit" %}
       {% set displayFile = "none" %}
-      {% set title = "Editing " + fileName %}
+      {% set title = "Editing: " + fileName %}
     {% else %}
       {% set displayFile = "show" %}
-      {% set title = "Add Song " %}
+      {% set title = "Add Song" %}
     {% endif %}
 
 
 
     <h1>{{title}}</h1>
+    <p><a class="smallButtonBlue" href="/">home</a> <a class ="smallButton" href="/playSong?fileLocation={{fileName}}">&#9658 play</a></p>
     <form action="/addSongData">
 
 
@@ -32,24 +33,32 @@
       {% endif %}
       <span style="display: {{displayFile}}" >
         File Name:
-        <input name="file" type="text" placeholder="File Name" value="{{fileName}}" >
+        <input name="file" type="text" placeholder="File Name" value="{{fileName}}" required>
+        <br>
         <br>
       </span>
-      
-      Red Value:
-      <input name="r" type="number" placeholder="Red Value" min="0" max="255">
+  
+      Color Picker:
+      <input type="color" name="color" required>
       <br>
-      Green Value:
-      <input name="g" type="number" placeholder="Green Value"min="0" max="255">
       <br>
-      Blue Value:
-      <input name="b" type="number" placeholder="Blue Value"min="0" max="255">
+      Delay(in ms) after set command:
+      <input name="delay" type="number" placeholder="delay" min="0" required>
       <br>
-      Delay(in ms) after previous command:
-      <input name="delay" type="number" placeholder="Delay(in ms) after previous command" min="0">
       <br>
-      <input type="submit" value="Add">
+      <input class="button" type="submit" value="Add">
     </form>
+
+    <h2>Current Show Set Up:</h2>
+    {% for line in lines %}
+
+      <div class="row">
+        <input type="color" name="color" value="{{line[5]}}" required>
+        Delay: <input type="number" name="delay" value="{{line[3]}}" min="0" required>
+        <br>
+      </div>
+      
+    {% endfor %}
   </div>
 </body>
 </html>
